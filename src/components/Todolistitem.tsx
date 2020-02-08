@@ -1,15 +1,15 @@
 import * as React from "react";
-import { ITodoItems } from "./constants";
+import {  ITodoItems } from "./constants";
 
-interface ITodoItemProps {
-  item: ITodoItems;
-  removeItem: (itemIndex: any) => void;
+interface IItemProp{
+  item:ITodoItems;
+  removeItem :(itemIndex:any) => void;
   markTodoDone:(itemIndex:any)=>void;
-
 }
 
-class TodoListItem extends React.Component<ITodoItemProps, {}>{
-  constructor(props: ITodoItemProps) {
+
+class TodoListItem extends React.Component<IItemProp, {}>{
+  constructor(props: IItemProp) {
     super(props);
     this.onClickClose = this.onClickClose.bind(this);
     this.onClickDone = this.onClickDone.bind(this);
@@ -29,9 +29,9 @@ class TodoListItem extends React.Component<ITodoItemProps, {}>{
     var todoClass = this.props.item.done ?
       "done" : "undone";
     return (
-      <li className="list-group-item ">
+      <li className="list-group-item " onClick={this.onClickDone}>
         <div className={todoClass}>
-          <span className="glyphicon glyphicon-ok icon" aria-hidden="true" onClick={this.onClickDone}></span>
+          <span className="glyphicon glyphicon-ok icon" aria-hidden="true" ></span>
           {this.props.item.value}
           {/* <button type="button" className="close" onClick={this.onClickClose}>&times;</button> */}
         </div>

@@ -3,7 +3,6 @@ import { TodoItems } from './constants';
 import ToDoHeader from "./Todoheader";
 import TodoForm from "./TodoForm";
 import TodoList from './Todolist';
-//import * as sqlite3 from 'sqlite3';
 
 class TodoApp extends React.Component<{}, {}> {
 
@@ -13,19 +12,7 @@ class TodoApp extends React.Component<{}, {}> {
     this.removeItem = this.removeItem.bind(this);
     this.markTodoDone = this.markTodoDone.bind(this);
     this.state = { todoItems: TodoItems };
-   // this.InitDB();
   }
-  // InitDB() {
-  //   var db = new sqlite3.Database('test.db');
-
-  //   db.run("INSERT INTO memos VALUES('TEST', 5000)");
-
-  //   db.each("SELECT * FROM memos", (err, row) => {
-  //     console.log(row.text);
-  //   });
-
-  //   db.close();
-  // }
 
   addItem(todoItemDesc: any) {
     TodoItems.push({

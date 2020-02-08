@@ -1,12 +1,6 @@
 import * as React from "react";
-import { ITodoItems } from "./constants";
+import { ITodolistProps } from "./constants";
 import TodoListItem from "./Todolistitem";
-
-interface ITodolistProps {
-    items:ITodoItems[];
-    removeItem :(itemIndex:any) => void;
-    markTodoDone:(itemIndex:any)=>void;
-}
 
 class TodoList extends React.Component<ITodolistProps,{}> {
     
@@ -17,7 +11,7 @@ class TodoList extends React.Component<ITodolistProps,{}> {
             );
           });
         return (
-             <ul className="list-group"> {items} </ul>
+             <ul className="list-group menu col-md-12"> {items} </ul>
         );
     }
 }

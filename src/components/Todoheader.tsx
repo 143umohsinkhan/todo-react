@@ -1,11 +1,12 @@
 import * as React from "react";
 
-class ToDoHeader extends React.Component<{}, {}> {
-    public render() {
-      return (
-        <h1>To Do Header List.</h1>
-        );
-    }
-  }
-  
+const ToDoHeader = () => {
+  return (
+    <div className='col-md-12'>
+    <h1>Add your to do items.</h1>
+    </div>
+  );
+}
+
 export default ToDoHeader;
+

@@ -43,7 +43,7 @@ class TodoForm extends React.Component<ITodoFormProps, IToDoFormState> {
         return (
             <form ref="form" onSubmit={this.onSubmit} className="form-inline">
                 <input type="text" value={this.state.value} onChange={this.handleChange} className="form-control" ref={this.descInput} placeholder="add a new todo..." />
-                <button type="submit" className="btn btn-default">Add</button>
+                <button type="submit" className="btn btn-primary">Add</button>
             </form>
         );
     }
