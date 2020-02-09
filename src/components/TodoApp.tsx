@@ -1,46 +1,59 @@
 import React from 'react';
-import { TodoItems } from './constants';
+import { ITodoItem } from '../../typings/types';
 import ToDoHeader from "./Todoheader";
 import TodoForm from "./TodoForm";
 import TodoList from './Todolist';
+import { DBServcies } from '../services/DBService';
 
-class TodoApp extends React.Component<{}, {}> {
+interface TodoAppSState {
+  todoItems: ITodoItem[];
+}
 
-  constructor({ }) {
+class TodoApp extends React.Component<{}, TodoAppSState> {
+
+  private db: DBServcies = new DBServcies();
+  private currentIndex = 0;
+
+  constructor() {
     super({});
-    this.addItem = this.addItem.bind(this);
-    this.removeItem = this.removeItem.bind(this);
-    this.markTodoDone = this.markTodoDone.bind(this);
-    this.state = { todoItems: TodoItems };
+    this.state = { todoItems: [] };
   }
 
-  addItem(todoItemDesc: any) {
-    TodoItems.push({
-      index: TodoItems.length + 1,
-      value: todoItemDesc,
-      done: false
+  componentDidMount() {
+    // this.db.Delete();
+    this.refreshList();
+  }
+
+  addItem = (todoItemDesc: any) => {
+    let item = { id: this.currentIndex + 1, value: todoItemDesc, done: false };
+    this.db.Add(item);
+    this.refreshList();
+  }
+
+  refreshList = () => {
+    this.db.GetToDos((items: ITodoItem[]) => {
+      this.currentIndex = items.length > 0 ? items[items.length - 1].id + 1 : 0;
+      this.setState({ todoItems: items })
     });
-    this.setState({ todoItems: TodoItems });
   }
 
-  removeItem(itemIndex: any) {
-    TodoItems.splice(itemIndex, 1);
-    this.setState({ todoItems: TodoItems });
-  }
-
-  markTodoDone(itemIndex: any) {
-    var todo = TodoItems[itemIndex];
-    // TodoItems.splice(itemIndex, 1);
-    todo.done = !todo.done;
-    //todo.done ? TodoItems.push(todo) : TodoItems.unshift(todo);
-    this.setState({ todoItems: TodoItems });
+  markTodoDone = (itemIndex: any) => {
+    let todo = this.state.todoItems.find(x => x.id == itemIndex);
+    if (todo) {
+      todo.done = !todo.done;
+      this.db.Update(todo);
+      this.refreshList();
+    }
+    else {
+      console.warn("failed to find items in the list");
+    }
   }
 
   render() {
     return (
       <div id="main">
         <ToDoHeader />
-        <TodoList items={TodoItems} removeItem={this.removeItem} markTodoDone={this.markTodoDone} />
+        <TodoList items={this.state.todoItems} markTodoDone={this.markTodoDone} />
         <TodoForm addItem={this.addItem} />
       </div>
     );

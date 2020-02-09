@@ -37,12 +37,12 @@ h1 {
 }
 
 .done {
-  color: red;
+  color: gray;
   text-decoration: line-through;
 }
 
 .undone {
-  color: black;
+  color: red;
 }
 
 @media (max-width: 990px){
